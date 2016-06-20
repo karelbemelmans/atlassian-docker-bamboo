@@ -44,6 +44,9 @@ VOLUME ["${BAMBOO_INSTALL_DIR}"]
 # HTTP Port
 EXPOSE 8085
 
+# Remote agent port
+EXPOSE 54663
+
 WORKDIR $BAMBOO_INSTALL_DIR
 
 # Run in foreground
