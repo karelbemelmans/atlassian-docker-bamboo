@@ -1,4 +1,4 @@
-FROM java:openjdk-7-jre
+FROM java:openjdk-8-jre
 MAINTAINER Karel Bemelmans <mail@karelbemelmans.com>
 
 ENV BAMBOO_VERSION 5.12.2.1
