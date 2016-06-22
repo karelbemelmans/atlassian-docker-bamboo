@@ -37,6 +37,11 @@ RUN curl -L --silent                     ${DOWNLOAD_URL}${BAMBOO_VERSION}.tar.gz
     && chown -R ${RUN_USER}:${RUN_GROUP} ${BAMBOO_INSTALL_DIR}/work               \
     && chown -R ${RUN_USER}:${RUN_GROUP} ${BAMBOO_INSTALL_DIR}/conf
 
+# Outside the container
+RUN rm /opt/atlassian/bamboo/conf/server.xml \
+  && ln -s /var/atlassian/application-data/bamboo/configuration/${BAMBOO_VERSION}/conf/server.xml /opt/atlassian/bamboo/conf/server.xml
+
+
 USER ${RUN_USER}:${RUN_GROUP}
 
 VOLUME ["${BAMBOO_INSTALL_DIR}"]
