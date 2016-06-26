@@ -19,7 +19,7 @@ ENV RUN_GROUP           daemon
 # Install git, download and extract Stash and create the required directory layout.
 # Try to limit the number of RUN instructions to minimise the number of layers that will need to be created.
 RUN apt-get update -qq                                                         \
-    && apt-get install -y --no-install-recommends git                          \
+    && apt-get install -y --no-install-recommends git ssh                      \
     && apt-get clean autoclean                                                 \
     && apt-get autoremove --yes                                                \
     && rm -rf /var/lib/{apt,dpkg,cache,log}/
