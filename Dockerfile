@@ -1,7 +1,7 @@
 FROM java:openjdk-8-jre
 MAINTAINER Karel Bemelmans <mail@karelbemelmans.com>
 
-ENV BAMBOO_VERSION 5.12.2.1
+ENV BAMBOO_VERSION 5.14.1
 ENV DOWNLOAD_URL   https://downloads.atlassian.com/software/bamboo/downloads/atlassian-bamboo-
 
 # https://confluence.atlassian.com/display/STASH/Stash+home+directory
@@ -40,7 +40,6 @@ RUN curl -L --silent                     ${DOWNLOAD_URL}${BAMBOO_VERSION}.tar.gz
 # Outside the container
 RUN rm /opt/atlassian/bamboo/conf/server.xml \
   && ln -s /var/atlassian/application-data/bamboo/configuration/${BAMBOO_VERSION}/conf/server.xml /opt/atlassian/bamboo/conf/server.xml
-
 
 USER ${RUN_USER}:${RUN_GROUP}
 
