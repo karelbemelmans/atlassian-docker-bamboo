@@ -1,21 +1,6 @@
 FROM java:openjdk-8-jre
 MAINTAINER Karel Bemelmans <mail@karelbemelmans.com>
 
-ENV BAMBOO_VERSION 5.14.1
-ENV DOWNLOAD_URL   https://downloads.atlassian.com/software/bamboo/downloads/atlassian-bamboo-
-
-# https://confluence.atlassian.com/display/STASH/Stash+home+directory
-ENV BAMBOO_HOME          /var/atlassian/application-data/bamboo
-
-# Install Atlassian Stash to the following location
-ENV BAMBOO_INSTALL_DIR   /opt/atlassian/bamboo
-
-# Use the default unprivileged account. This could be considered bad practice
-# on systems where multiple processes end up being executed by 'daemon' but
-# here we only ever run one process anyway.
-ENV RUN_USER            daemon
-ENV RUN_GROUP           daemon
-
 # Install git, download and extract Stash and create the required directory layout.
 # Try to limit the number of RUN instructions to minimise the number of layers that will need to be created.
 RUN apt-get update -qq                                                         \
@@ -24,7 +9,17 @@ RUN apt-get update -qq                                                         \
     && apt-get autoremove --yes                                                \
     && rm -rf /var/lib/{apt,dpkg,cache,log}/
 
+ENV BAMBOO_VERSION 6.0.0
+ENV DOWNLOAD_URL   https://downloads.atlassian.com/software/bamboo/downloads/atlassian-bamboo-
+ENV BAMBOO_HOME          /var/atlassian/application-data/bamboo
+ENV BAMBOO_INSTALL_DIR   /opt/atlassian/bamboo
 RUN mkdir -p $BAMBOO_INSTALL_DIR
+
+# Use the default unprivileged account. This could be considered bad practice
+# on systems where multiple processes end up being executed by 'daemon' but
+# here we only ever run one process anyway.
+ENV RUN_USER            daemon
+ENV RUN_GROUP           daemon
 
 RUN curl -L --silent                     ${DOWNLOAD_URL}${BAMBOO_VERSION}.tar.gz | tar -xz --strip=1 -C "$BAMBOO_INSTALL_DIR" \
     && mkdir -p                          ${BAMBOO_INSTALL_DIR}/conf/Catalina      \
